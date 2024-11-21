@@ -6,35 +6,51 @@
 
 ## 目錄
 
-- [JSX 的使用](#jsx-的使用)
+- React 基礎
 
-- [用 JSX 寫 Hello World (CodePen)](#用-jsx-寫-hello-world-codepen)
+  - [JSX 的使用](#jsx-的使用)
 
-- [在 JSX 中帶入變數與表達式 (CodePen)](#在-jsx-中帶入變數與表達式-codepen)
+  - [用 JSX 寫 Hello World (CodePen)](#用-jsx-寫-hello-world-codepen)
 
-- [將計數器範例改用 JSX 來寫 (CodePen)](#將計數器範例改用-jsx-來寫-codepen)
+  - [在 JSX 中帶入變數與表達式 (CodePen)](#在-jsx-中帶入變數與表達式-codepen)
 
-- [在 JSX 中套用 CSS inline-style （行內樣式）(CodePen)](#在-jsx-中套用-css-inline-style-行內樣式codepen)
+  - [將計數器範例改用 JSX 來寫 (CodePen)](#將計數器範例改用-jsx-來寫-codepen)
 
-- [建立第一個 React 元件 (CodePen)](#建立第一個-react-元件-codepen)
+  - [在 JSX 中套用 CSS inline-style （行內樣式）(CodePen)](#在-jsx-中套用-css-inline-style-行內樣式codepen)
 
-- [React 元件與 HTML 元素的命名規則與慣例](#react-元件與-html-元素的命名規則與慣例)
+  - [建立第一個 React 元件 (CodePen)](#建立第一個-react-元件-codepen)
 
-- [React 中的事件處理 (CodePen)](#react-中的事件處理-codepen)
+  - [React 元件與 HTML 元素的命名規則與慣例](#react-元件與-html-元素的命名規則與慣例)
 
-- [React 元件中的資料狀態 - useState 的使用 (CodePen)](#react-元件中的資料狀態---usestate-的使用-codepen)
+  - [React 中的事件處理 (CodePen)](#react-中的事件處理-codepen)
 
-- [條件轉譯的使用（conditional rendering）(CodePen)](#條件轉譯的使用conditional-renderingcodepen)
+  - [React 元件中的資料狀態 - useState 的使用 (CodePen)](#react-元件中的資料狀態---usestate-的使用-codepen)
 
-- [動態添加 CSS 樣式來隱藏 HTML 元素 (CodePen)](#動態添加-css-樣式來隱藏-html-元素-codepen)
+  - [條件轉譯的使用（conditional rendering）(CodePen)](#條件轉譯的使用conditional-renderingcodepen)
 
-- [計數器事件處理器的重構 (CodePen)](#計數器事件處理器的重構-codepen)
+  - [動態添加 CSS 樣式來隱藏 HTML 元素 (CodePen)](#動態添加-css-樣式來隱藏-html-元素-codepen)
 
-- [JSX 中迴圈的使用 (CodePen)](#jsx-中迴圈的使用-codepen)
+  - [計數器事件處理器的重構 (CodePen)](#計數器事件處理器的重構-codepen)
 
-- [JSX 元素只能有一個最外層元素 (CodePen)](#jsx-元素只能有一個最外層元素-codepen)
+  - [JSX 中迴圈的使用 (CodePen)](#jsx-中迴圈的使用-codepen)
 
-- [React Hooks 不可這麼用](#react-hooks-不可這麼用)
+  - [JSX 元素只能有一個最外層元素 (CodePen)](#jsx-元素只能有一個最外層元素-codepen)
+
+  - [React Hooks 不可這麼用](#react-hooks-不可這麼用)
+
+- React 元件間的資料傳遞：props 的應用
+
+  - [使用 Create React App 工具建立專案](#使用-create-react-app-工具建立專案)
+
+  - [建立網速單位轉換器的 UI](#建立網速單位轉換器的-ui)
+
+  - [React 中表單的基本應用](#react-中表單的基本應用)
+
+  - [React 元件的拆分](#react-元件的拆分)
+
+  - [React 元件間的資料傳遞 - props 的使用](#react-元件間的資料傳遞---props-的使用)
+
+  - [使用 React FontAwesome](#使用-react-fontawesome)
 
 ## JSX 的使用
 
@@ -1236,3 +1252,675 @@ const Counter = () => {
   };
 };
 ```
+
+## 使用 Create React App 工具建立專案
+
+使用 React 官方提供的 [Create React App](https://create-react-app.dev/) 這個工具來快速建立專案。
+
+```bash
+npx create-react-app internet-speed-converter
+cd internet-speed-converter
+npm start
+```
+
+初始專案啟動後：
+
+![圖片24](./images/react-24.PNG)
+
+### 初始專案結構
+
+![圖片25](./images/react-25.PNG)
+
+- public/index.html - 應用的入口文件
+
+  ![圖片26](./images/react-26.PNG)
+
+  其中最重要的是這一行：`<div id="root"></div>`，這是應用的容器，React 會將所有內容渲染到這個 `div` 裡面。
+
+  基本上除了引入全局資源外基本不會動它。
+
+- src/index.js - 渲染邏輯的入口點
+
+  ![圖片27](./images/react-27.PNG)
+
+  這裡我們直接使用 `import` 語法把 React 相關的套件載入，而 `App` 這支檔案則是一個 React 元件，它就類似上個單元中我們建立的 `Counter` 元件一樣。
+
+  最後透過 `root.render` 將 React 掛載到 `id` 為 `root` 的 `div` 上。
+
+  > `React.StrictMode` 是 React 提供的一種開發模式包裝，它會在開發過程中幫助檢測潛在問題，只會在開發環境中運行，在生產環境中它並不會啟用。
+
+- src/App.js - 組件
+
+  ![圖片28](./images/react-28.PNG)
+
+  這是我們主要會編輯的檔案，它就是一個 React 元件，和我們先前寫的 `Counter` 元件很類似，就是**一個會回傳 JSX 的函式**。最後則要**透過 `export` 把元件匯出**。
+
+  > 在這裡，當用戶修改 `App.js` 並保存時，React 應用會自動重新加載頁面，這是 `CRA` 提供的開發便利。
+
+- src/app.css - 組件樣式
+
+  ![圖片29](./images/react-29.PNG)
+
+  這裡面會放套用在 `src/App.js` 中的 CSS 樣式，就像我們在 CodePen 時使用的 CSS 區塊，在這支檔案所定義的 `class` 都可以在 `App` 這個元件中使用 `className` 的方式來套用。
+
+## 建立網速單位轉換器的 UI
+
+試著把 [網速單位轉換器 UI 範例](https://codepen.io/PJCHENder/pen/LYGbzxz) 整合到本地專案中的 React Component 內。
+
+以目前的網速轉換器專案來說，我們只需要編輯 `src/App.js` 和 `src/App.css` 這兩支檔案即可。
+
+- 1.將 CSS 的部分複製到 `src/App.css` 這支檔案中。
+
+- 2.將 HTML 的部分複製到 `src/App.js` 中，把 `App` 這個元件變成網速單位換算器。
+
+  HTML 結構：
+
+  ![圖片30](./images/react-30.PNG)
+
+- 3.接著根據 JSX，原本的 CSS `class` 需要全部改用 `className`，而在 HTML 中用到了行內樣式的部分也需要改用 JSX 中行內樣式的寫法，例如：`style={{ marginTop: '30px' }}`。
+
+  ```JSX
+  import './App.css';
+
+  function App() {
+    return (
+      <div className="container">
+        <div className="card-header">Network Speed Converter</div>
+        <div className="card-body">
+          <div className="unit-control">
+            <div className="unit">Mbps</div>
+            <span className="exchange-icon fa-fw fa-stack">
+              <i className="far fa-circle fa-stack-2x"></i>
+              <i className="fas fa-exchange-alt fa-stack-1x"></i>
+            </span>
+            <div className="unit">MB/s</div>
+          </div>
+          <div className="converter">
+            <div className="flex-1">
+              <div className="converter-title">Set</div>
+              <input type="number" className="input-number" min="0" />
+            </div>
+            <span className="angle-icon fa-2x" style={{ marginTop: '30px' }}>
+              <i className="fas fa-angle-right"></i>
+            </span>
+            <div className="text-right flex-1">
+              <div className="converter-title">Show</div>
+              <input
+                type="text"
+                className="input-number text-right"
+                disabled
+                value="125"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="card-footer">FAST</div>
+      </div>
+    );
+  }
+
+  export default App;
+  ```
+
+- 4.最後透過 `npm start` 啟動專案。
+
+  ![圖片31](./images/react-31.PNG)
+
+  可以發現頁面上的圖示沒有正常呈現，這是因為這裡我們使用的是一個第三方的圖示工具 `Font Awesome`，因為還未安裝使用，所以圖示還沒辦法正常呈現。
+
+  在介紹更多關於 React 元件的使用方式後，會再來套用這個工具。
+
+## React 中表單的基本應用
+
+使用者可以透過在左邊的 `input` 欄位輸入 Mbps 的數值後，直接在右邊得到轉換後的 MB/s，
+
+首先要在 React 中取得使用者在表單所輸入的資料，並根據資料進行對應的處理來驅動畫面更新。
+
+### 在對應的 `input` 元素上綁定 `onChange` 事件
+
+```JSX
+<div className="flex-1">
+  <div className="converter-title">Set</div>
+  <input
+    type="number"
+    className="input-number"
+    min="0"
+    onChange={() => console.log('onChange')}
+  />
+</div>
+```
+
+可以看到當輸入數字時，會觸發`onChange` 事件。
+
+![react-08.gif](./images/gif/react-08.gif)
+
+### 透過 useState 讓 React 明白資料的變化
+
+觸發事件之後，我們需要讓 React 知道資料有變化來進行畫面的重新轉譯。
+
+可以使用前面介紹過的 `useState`：
+
+- 1.載入 `useState` 方法。
+
+  與 CodePen 不同，這裡是將 React 套件下載到本機電腦上，因此需要透過 `import` 的方式來載入 `useState` 方法。
+
+  ```JSX
+  import { useState } from 'react';
+  ```
+
+- 2.使用 `useState` 方法。
+
+  ```JSX
+  function App() {
+    // 定義 state，取得預設值為 0 的 inputValue 和修改該狀態的 setInputValue 方法
+    const [inputValue, setInputValue] = useState(0);
+
+    return {
+      /* ...省略... */
+    };
+  }
+  ```
+
+- 3.定義 `onChange` 的事件處理器。
+
+  把使用者輸入的內容先透過 `e.target.value` 的方式取出來，然後透過 `setInputValue` 這個方法，請 React 幫我們更新 `inputValue` 這個 state 的資料。
+
+  ```JSX
+  function App() {
+    const [inputValue, setInputValue] = useState(0);
+
+    // 定義事件處理器
+    const handleInputChange = (e) => {
+      const { value } = e.target;
+      setInputValue(value);
+    };
+
+    return {
+      /* ...省略... */
+    };
+  }
+  ```
+
+  > Tips：在 React 中，常使用 `handle` 當作事件處理器命名的開頭，例如 `onClick` 對應到 `handleClick`，`onChange` 對應到 `handleChange`。
+
+- 4.調整對應的 `input` 元素。
+
+  把 `onChange` 事件換成寫好的事件處理器，並把 `inputValue` 帶入到 `<input>` 的 `value` 屬性中。
+
+  ```JSX
+  <div className="flex-1">
+    <div className="converter-title">Set</div>
+    <input
+      type="number"
+      className="input-number"
+      min="0"
+      value={inputValue}
+      onChange={handleInputChange}
+    />
+  </div>
+  ```
+
+  讓畫面右邊的 input 值也同步更新。
+
+  ```JSX
+  <div className="text-right flex-1">
+    <div className="converter-title">Show</div>
+    <input
+      type="text"
+      className="input-number text-right"
+      disabled
+      value={inputValue}
+    />
+  </div>
+  ```
+
+  現在當使用者在左側輸入內容時，右側的數值就會跟著同步變動。
+
+  ![react-09.gif](./images/gif/react-09.gif)
+
+- 5.加上單位換算的功能。
+
+  最後加上單位換算的功能就完成了，`1 Mbps = 0.125 MB/s`，也就是 Mbps 的值除以 8 才會是 MB/s。
+
+  只需要修改右側帶入 `<input />` 中的 `value`，讓它是輸入的值除以 8 即可，也就是 `value={inputValue / 8}`。
+
+  ```JSX
+  <div className="text-right flex-1">
+    <div className="converter-title">Show</div>
+    <input
+      type="text"
+      className="input-number text-right"
+      disabled
+      value={inputValue / 8}
+    />
+  </div>
+  ```
+
+  ![react-10.gif](./images/gif/react-10.gif)
+
+### 畫面更新的邏輯
+
+使用者之所以能夠在畫面的右側看到自己輸入的內容，是因為下面這一連串過程導致畫面重新轉譯後，才把最新的 `inputValue` 顯示在使用者的畫面上：
+
+![圖片32](./images/react-32.PNG)
+
+## React 元件的拆分
+
+在 React 中，元件除了能**方便開發者重複使用**外，還有一點是讓開發者去**管理各個「功能獨立」的元素**，並且把每個元件都拆分成獨立的 JS 檔案後，管理上就會方便許多了。
+
+### 拆出 UnitControl 元件
+
+React 元件的拆分非常簡單，只需要透過函式定義一個新的 React 元件 `UnitControl`，同時因為這個元件沒有要做其他處理，所以可以在箭頭函式的 `=>` 後直接回傳 JSX。
+
+接著只需要在要使用它的地方帶入 `<UnitControl />` 即可。
+
+![圖片33](./images/react-33.PNG)
+
+### 拆出 CardFooter 元件
+
+使用一樣的方法可以拆出 `CardFooter` 元件。
+
+![圖片34](./images/react-34.PNG)
+
+### 檔案拆分
+
+現在會發現在 `App.js` 中就包含了三個 React 元件，而未來如果內容變多或需要在元件中進行邏輯運算時，在同一隻檔案中包含多個元件就不會是太好的做法。
+
+因此可以透過 ES Module 系統，把元件拆分成不同的檔案來管理。
+
+- 1.新增 `components` 資料夾。
+
+  在 `src` 中新增 `components` 資料夾，並分別在裡面新增 `UnitControl.js` 和 `CardFooter.js` 這兩隻檔案。
+
+  ![圖片35](./images/react-35.PNG)
+
+- 2.建立 `UnitControl`、`CardFooter` 檔案。
+
+  接著在 `UnitControl.js`、`CardFooter.js` 中，把原本寫在 `App.js` 中的 `UnitControl`、`CardFooter.` 元件分別剪下放進對應的檔案中，最後使用 `export default` 將其匯出。
+
+  ![圖片36](./images/react-36.PNG)
+
+- 3.在 `App.js` 中匯入 Component。
+
+  最後在 `App.js` 中，只需要把剛剛 `export` 的元件匯入（`import`）即可直接使用，程式碼幾乎不用動。
+
+  ![圖片37](./images/react-37.PNG)
+
+## React 元件間的資料傳遞 - props 的使用
+
+現在我們想要讓 `CardFooter` 元件能夠根據使用者輸入的網速快慢來顯示不同的文字內容和顏色樣式。
+
+只是現在使用者輸入的網速 `inputValue` 這個狀態是保存在 `App` 這個元件中，而 `CardFooter` 並沒有辦法直接知道 `App` 中 `inputValue` 的值是多少，必須要把這個值從 `App` 傳遞到 `CardFooter` 後，`CardFooter` 才會知道 `inputValue` 的值。
+
+因此這裡就需要先來了解如何在 React 各元件之間進行的資料傳遞。
+
+### 透過 `props` 在元件間傳遞資料狀態
+
+在 React 中，子層元件如果想要得到父層元件的資料狀態，只需要透過 `props` 的方式來傳送資料就可以了。
+
+![圖片38](./images/react-38.PNG)
+
+- 1.父層透過 `props` 傳遞資料。
+
+  假設現在我們有名為 `ChildComponent` 的子層元件，想要把父層元件中的 `firstName` 和 `lastName` 這兩個資料傳遞進 `ChildComponent` 中，**只需要透過像是 HTML 屬性的方式傳進去就可以了**。
+
+  ```JSX
+  // 父層元件
+  // STEP 1: 將資料透過 html 屬性的方式傳入 component 內
+  const ParentComponent = () => (
+    <ChildComponent firstName="Aaron" lastName="Chen" />
+  );
+  ```
+
+- 2.子層元件接收 `props` 資料的方式。
+
+  子層元件只需要透過 **「函式參數」** 的方式來接收父層元件傳進來的資料即可。
+
+  透過在函式參數中帶入 `props` 這個參數，即可取得父層傳進來的資料，透過 `props.firstName` 和 `props.lastName` 就可取得對應的值。
+
+  ```JSX
+  // 子層元件
+  // STEP 2: 在該 component 內可以透過參數 props 取得傳入的資料
+  const ChildComponent = (props) => {
+    return (
+      <h1>
+        Hello, {props.firstName} {props.lastName}
+      </h1>
+    ); // Hello, Aaron Chen
+  };
+  ```
+
+  > Tips：慣例上會把函式參數的名稱稱作 `props` 但實際上名稱是可以自由命名的。
+
+  在取用 `props` 的時候，會習慣**使用解構賦值直接把需要的變數取出來**。
+
+  ```JSX
+  // 透過解構賦值把 props 內需要用到的變數取出
+  const ChildComponent = (props) => {
+    const { firstName, lastName } = props;
+    return (
+      <h1>
+        Hello, {firstName} {lastName}
+      </h1>
+    ); // Hello, Aaron Chen
+  }
+  ```
+
+  或是更精簡到連 `props` 都不命名了，直接在參數中透過解構賦值取出來用。
+
+  ```JSX
+  // 透過解構賦值直接在「函式參數的地方」把需要用到的變數取出
+  const ChildComponent = ({ firstName, lastName }) => {
+    return (
+      <h1>
+        Hello, {firstName} {lastName}
+      </h1>
+    ); // Hello, Aaron Chen
+  }
+  ```
+
+### 將 `inputValue` 傳遞到 `CardFooter` 中使用
+
+只要根據前面介紹的父層透過 `props` 傳遞資料，子層元件接收 `props` 資料的方式即可。
+
+- src/App.js
+
+  ```JSX
+  function App() {
+    //...
+
+    return (
+      <div className="container">
+        {/* ... */}
+        {/* STEP 1: 把想要傳入 CardFooter 的資料透過 key={value} 的方式傳入 */}
+        <CardFooter inputValue={inputValue} />
+      </div>
+    );
+  }
+  ```
+
+- components/CardFooter.js
+
+  ```JSX
+  // STEP 2：透過 props 取得從父層傳入的資料
+  const CardFooter = (props) => {
+    const { inputValue } = props;
+
+    // ...
+  };
+  ```
+
+整個流程會像這樣：
+
+![圖片39](./images/react-39.PNG)
+
+### 根據 `inputValue` 改變 `CardFooter` 的樣式
+
+現在可以根據 `inputValue` 使用條件轉譯和動態 CSS 樣式帶入 JSX 中讓 `CardFooter` 可以動態改變顯示。
+
+條件邏輯：
+
+- 當 `inputValue` 沒有輸入時，會顯示 ---，顏色會是 `#d3d8e2`。
+
+- 當 `inputValue` 小於 15 時，會顯示 SLOW，顏色會是 `#ee362d`。
+
+- 當 `15 <= inputValue < 40`，會顯示 GOOD，顏色會是 `#1b82f1`。
+
+- 當 `inputValue` 大於等於 40 時，會顯示 FAST，顏色會 `#13d569`。
+
+```JSX
+const CardFooter = (props) => {
+  const { inputValue } = props;
+  let footer = {};
+
+  if (!inputValue) {
+    footer = {
+      title: '---',
+      backgroundColor: '#d3d8e2',
+    };
+  } else if (inputValue < 15) {
+    footer = {
+      title: 'SLOW',
+      backgroundColor: '#ee362d',
+    };
+  } else if (inputValue < 40) {
+    footer = {
+      title: 'GOOD',
+      backgroundColor: '#1b82f1',
+    };
+  } else if (inputValue >= 40) {
+    footer = {
+      title: 'FAST',
+      backgroundColor: '#13d569',
+    };
+  }
+
+  return (
+    <div
+      className="card-footer"
+      style={{ backgroundColor: footer.backgroundColor }}
+    >
+      {footer.title}
+    </div>
+  );
+};
+
+export default CardFooter;
+```
+
+![react-11.gif](./images/gif/react-11.gif)
+
+### 子層元件如何修改父層元件的資料狀態
+
+除了前面介紹的將**資料狀態**當成 `props` 傳入子層元件之外，**函式**或用來**改變資料狀態的方法**也可以透過 `props` 傳入。
+
+- 1.UnitConverter 元件的拆分。
+
+  在 `components` 資料夾中新增一支名為 `UnitConverter.js` 的檔案，並將 `<div className="converter">` 的內容放進去。
+
+  ```JSX
+  const UnitConverter = () => <div className="converter">{/* ... */}</div>;
+
+  export default UnitConverter;
+  ```
+
+  最後在 `App.js` 匯入 ‵`UnitConverter` 元件。
+
+  ```JSX
+  import UnitConverter from './components/UnitConverter';
+  // ...
+
+  function App() {
+    // ...
+
+    return (
+      <div className="container">
+        <div className="card-header">Network Speed Converter</div>
+        <div className="card-body">
+          <UnitControl />
+          <UnitConverter />
+          <CardFooter inputValue={inputValue} />
+        </div>
+      </div>
+    );
+  }
+
+  export default App;
+  ```
+
+  運行 `npm start` 後會發現提示錯誤：
+
+  ![圖片40](./images/react-40.PNG)
+
+  這是因為在 `UnitConverter` 元件中，找不到 `inputValue` 和 `handleInputChange` 這兩個變數。
+
+- 2.透過 `props` 傳遞需要的資料與函式。
+
+  現在可以使用 `props` 把這兩個變數從 `App` 傳入到 `UnitConverter` 元件中。
+
+  ![圖片41](./images/react-41.PNG)
+
+  ```JSX
+  import UnitConverter from './components/UnitConverter';
+  // ...
+
+  function App() {
+    // ...
+
+    return (
+      <div className="container">
+        <div className="card-header">Network Speed Converter</div>
+        <div className="card-body">
+          <UnitControl />
+          <UnitConverter
+            inputValue={inputValue}
+            handleInputChange={handleInputChange}
+          />
+          <CardFooter inputValue={inputValue} />
+        </div>
+      </div>
+    );
+  }
+
+  export default App;
+  ```
+
+  在 `UnitConverter` 元件中，一樣透過參數的方式取得父層元件 `props` 傳進來的內容，並且解構賦值把需要的資料或函式取出即可。
+
+  ```JSX
+  const UnitConverter = (props) => {
+    const { inputValue, handleInputChange } = props;
+
+    return /* ... */;
+  };
+
+  export default UnitConverter;
+  ```
+
+  現在 `UnitConverter` 元件也可以正常運作了。
+
+#### 重要：子層元件不可直接修改父層元件傳入的 `props`
+
+在 React 元件間的資料傳遞中有一個非常重要的概念，就是 **「只有該資料的擁有者可以去修改資料」**、**「`props` 是唯讀且不可變的」**。
+
+以網速單位轉換器的例子來說， `inputValue` 是在 `App` 中被建立，它是該資料的擁有者，雖然透過 `props` 可以把 `inputValue` 的值傳遞到子層元件，但是子層元件只能讀取 `inputValue` 的值，它們是沒有權限去直接修改 `inputValue` 的。
+
+雖然子層不能直接修改父層的 `props`，但是可以請父層幫它完成這個資料修改的動作。
+
+先把修改資料的函式在父層定義好，像是 `App` 元件中的 `handleInputChange` 這個修改 `inputValue` 的方法，並透過 `props` 把這個方法傳到子層內。當子層需要修改父層的資料狀態時，就只需要呼叫 `handleInputChange` 這個方法即可。
+
+> 補充資料：[如何在子 component 裡觸發更新父 component 的資料](https://ithelp.ithome.com.tw/articles/10299348)
+
+## 使用 React FontAwesome
+
+根據 [FontAwesome 官方文件](https://docs.fontawesome.com/web/use-with/react) 的說明，建議我們使用官方的 `react-fontawesome` 元件，讓所有功能都能正常運作。
+
+### 安裝 React FontAwesome
+
+- 1.新增 SVG 核心。
+
+  ```bash
+  npm i --save @fortawesome/fontawesome-svg-core
+  ```
+
+- 2.新增圖示套件。
+
+  FontAwesome 將所有圖示分成三類，分別是 regular、brands 和 solid 這三類
+
+  ```bash
+  npm i --save @fortawesome/free-solid-svg-icons
+  npm i --save @fortawesome/free-regular-svg-icons
+  npm i --save @fortawesome/free-brands-svg-icons
+  ```
+
+- 3.安裝 Font Awesome React 元件
+
+  ```bash
+  npm i --save @fortawesome/react-fontawesome@latest
+  ```
+
+### React FontAwesome 的使用
+
+- 1.註冊 React FontAwesome 中會用到的圖示。
+
+  這裡使用時會需要在最上層的元件，也就是 `App.js` 這支檔案中註冊 FontAwesome 工具。
+
+  ```JSX
+  // App.js
+  import { library } from '@fortawesome/fontawesome-svg-core'
+  import { fab } from '@fortawesome/free-brands-svg-icons';
+  import { fas } from '@fortawesome/free-solid-svg-icons';
+  import { far } from '@fortawesome/free-regular-svg-icons';
+
+  library.add(fab, fas, far);
+  ```
+
+  > Tips：在這裡我們把 FontAwesome 提供的所有圖示都載入進來，但實際使用時，為了避免載入的檔案太過龐大影響使用者瀏覽的速度，通常只會載入有用到的圖示。
+
+- 2.在需要的地方使用 React FontAwesome 元件。
+
+  首先在想要使用圖示的地方匯入 React FontAwesome 元件。
+
+  ```JSX
+  // STEP 1：在想要使用圖示的地方匯入 React FontAwesome
+  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+  ```
+
+  接著在需要使用圖示的地方，和把 `props` 傳入子層元件的方式一樣，只需要在 `<FontAwesomeIcon />` 這個元件中使用 `icon=` 帶入**字串** 或是使用 `icon={...}` 帶入**一個陣列**就可以了。
+
+  > 圖示對應的名稱，可以到 [FontAwesome 的官方網站](https://fontawesome.com/icons) 檢視。
+
+  ```JSX
+  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+  export const Gadget = () => (
+    <div>
+      {/* STEP 2：套用 FontAwesome 提供的 microsoft 圖示} */}
+      {/* 使用字串 */}
+      <FontAwesomeIcon icon="fa-brands fa-microsoft" />
+      {/* 使用陣列 */}
+      <FontAwesomeIcon icon={['fab', 'microsoft']} />
+    </div>
+  );
+  ```
+
+### 網速單位轉換器套用 FontAwesome 的圖示
+
+現在網速單位轉換器套用 FontAwesome 的圖示。
+
+- UnitControl 元件。
+
+  ```JSX
+  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+  const UnitControl = () => (
+    {/* ... */}
+      <span className="exchange-icon fa-fw fa-stack">
+        <FontAwesomeIcon icon="far fa-circle" className="fa-stack-2x" />
+        <FontAwesomeIcon icon="fas fa-exchange-alt" className="fa-stack-1x" />
+      </span>
+    {/* ... */}
+  );
+
+  export default UnitControl;
+  ```
+
+- UnitConverter 元件。
+
+  ```JSX
+  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+  const UnitConverter = (props) => {
+    {/* ... */}
+      <span className="angle-icon fa-2x" style={{ marginTop: 30 }}>
+        <FontAwesomeIcon icon="fas fa-angle-right" />
+      </span>
+    {/* ... */}
+  };
+
+  export default UnitConverter;
+  ```
+
+現在圖示也可以正常顯示了。
+
+![圖片42](./images/react-42.PNG)
