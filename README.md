@@ -1255,6 +1255,12 @@ const Counter = () => {
 
 ## 使用 Create React App 工具建立專案
 
+> [!CAUTION]
+>
+> ## Deprecated
+>
+> Today(February 14, 2025), we’re deprecating [Create React App](https://create-react-app.dev/) for new apps, and encouraging existing apps to migrate to a [framework](https://react.dev/learn/creating-a-react-app). We’re also providing docs for when a framework isn’t a good fit for your project, or you prefer to start by [building a framework](https://react.dev/learn/building-a-react-framework). —— [Sunsetting Create React App](https://react.dev/blog/2025/02/14/sunsetting-create-react-app)
+
 使用 React 官方提供的 [Create React App](https://create-react-app.dev/) 這個工具來快速建立專案。
 
 ```bash
