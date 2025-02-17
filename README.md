@@ -54,7 +54,7 @@
 
 ## JSX 的使用
 
-透過 JSX 讓開發者可以直接把 HTML 放到 JavaScript 中，將 JavaScript 內的用法與程式邏輯，直接套用到 HTML 的元素上，不再需要先用 `querySelector` 去選到指定元素後再進行更新操作。
+> 參考資料：[[Day 05] 建構一切 UI 的最基本單位 — React element](https://ithelp.ithome.com.tw/articles/10294538)、[[Day 06] Render React elements](https://ithelp.ithome.com.tw/articles/10295277)、[[Day 07] JSX 根本就不是在 JavaScript 中寫 HTML](https://ithelp.ithome.com.tw/articles/10296066)
 
 ## 用 JSX 寫 Hello World (CodePen)
 
@@ -698,7 +698,7 @@ const Counter = () => {
 
 現在我們可以透過使用 `&&` 邏輯運算子來實現 `if` 語法的功能，當 `&&` 前面的值為 `true` （真） 時，就取後面的那個當值。
 
-當使用這種做法時，當條件符合的時候，**這個按鍵的元素會從 DOM 中完全移除**。
+當使用這種做法時，當條件不符合的時候，**這個按鍵的元素會從 DOM 中完全移除**。
 
 [💻CodePen Demo](https://codepen.io/ypinpin/pen/MWNxZJX)。
 
@@ -971,7 +971,7 @@ root.render(<Counter />);
 
 ![圖片18](./images/react-18.PNG)
 
-但也可以用其他的寫法來解決這個問題，也就是在 JSX 執行的時候讓 `handleClick` 直接被執行，並把帶入參數 `type`，**但在 `handleClick`
+但也可以用其他的寫法來解決這個問題，也就是在 JSX 執行的時候讓 `handleClick` 直接被執行，並且帶入參數 `type`，**但在 `handleClick`
 執行後則會回傳另一個函式到 `onClick={}` 的 `{}` 內。這個被回傳的函式一樣會在按鈕的點擊事件被觸發時被呼叫到**，語法如下：
 
 ```JSX
@@ -1193,10 +1193,10 @@ const Counter = () => (
 ```JSX
 // 使用 React Fragment 簡寫 <></>
 const Counter = () => (
-  <R>
+  <>
     <div class="container">{/* ... */}</div>
     <div class="other-container">{/* ... */}</div>
-  </R>
+  </>
 );
 ```
 
