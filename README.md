@@ -5394,4 +5394,8 @@ jobs:
 
 - Demo (Android)
 
-![react-25.gif](./images/gif/react-25.gif)
+  ![react-25.gif](./images/gif/react-25.gif)
+
+- Demo (iOS)
+
+  ![react-26.gif](./images/gif/react-26.gif)
