@@ -5394,6 +5394,4 @@ jobs:
 
 - Demo (Android)
 
-  <video width="320" height="480" controls>
-    <source src="./images/demo.mp4" type="video/mp4">
-  </video>
+![react-25.gif](./images/gif/react-25.gif)
